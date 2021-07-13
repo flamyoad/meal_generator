@@ -5,8 +5,9 @@ import 'package:meal_generator/core/api/drinks/models/drinks_category_list.dart'
 import 'package:meal_generator/presentation/bloc/category/drinks_category_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/drinks_category_event.dart';
 import 'package:meal_generator/presentation/bloc/category/drinks_category_state.dart';
+import 'package:meal_generator/presentation/widget/list_error_indicator.dart';
 
-import 'list_loading_indicator.dart';
+import '../list_loading_indicator.dart';
 
 class DrinksCategoryScreen extends StatefulWidget {
   @override
@@ -14,13 +15,13 @@ class DrinksCategoryScreen extends StatefulWidget {
 }
 
 class DrinksCategoryScreenState extends State<DrinksCategoryScreen> {
-  late DrinksCategoryBloc drinksBloc;
+  late DrinksCategoryBloc _drinksBloc;
 
   @override
   void initState() {
     super.initState();
-    drinksBloc = BlocProvider.of<DrinksCategoryBloc>(context);
-    drinksBloc.add(DrinksCategoryInitialLoad());
+    _drinksBloc = BlocProvider.of<DrinksCategoryBloc>(context);
+    _drinksBloc.add(DrinksCategoryInitialLoad());
   }
 
   @override
@@ -31,11 +32,15 @@ class DrinksCategoryScreenState extends State<DrinksCategoryScreen> {
       } else if (state is DrinksCategoryLoaded) {
         return _buildList(state.items);
       } else if (state is DrinksCategoryError) {
-        return Text('Error');
+        return ListErrorIndicator(_reloadList);
       } else {
         throw Error();
       }
     });
+  }
+
+  void _reloadList() {
+    _drinksBloc.add(DrinksCategoryReload());
   }
 
   Widget _buildList(List<DrinksCategory> categories) {

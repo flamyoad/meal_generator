@@ -6,7 +6,7 @@ class ListLoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: 150),
+        constraints: BoxConstraints(minHeight: 150),
         child: Center(
           child: CircularProgressIndicator(),
         ),

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:meal_generator/core/api/meals/models/meals_category_list.dart';
+import 'package:meal_generator/presentation/models/meals_category.dart';
 
 class MealsCategoryState extends Equatable {
   @override

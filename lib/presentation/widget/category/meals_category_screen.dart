@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meal_generator/core/api/meals/models/meals_category_list.dart';
-import 'package:meal_generator/core/di/service_locator.dart';
-import 'package:meal_generator/core/repository/meals/i_meals_repository.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_event.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_state.dart';
-import 'package:meal_generator/presentation/widget/category/list_loading_indicator.dart';
+import 'package:meal_generator/presentation/models/meals_category.dart';
+import 'package:meal_generator/presentation/widget/list_error_indicator.dart';
+import 'package:meal_generator/presentation/widget/list_loading_indicator.dart';
 
 class MealsCategoryScreen extends StatefulWidget {
   @override
@@ -30,13 +29,16 @@ class _MealsCategoryScreenState extends State<MealsCategoryScreen> {
       if (state is MealsCategoryLoading) {
         return ListLoadingIndicator();
       } else if (state is MealsCategoryLoaded) {
-        // return _buildList(state.items);
         return _buildList(state.items);
       } else if (state is MealsCategoryError) {
-        return SliverToBoxAdapter(child: Text('Error'));
+        return ListErrorIndicator(_reloadList);
       }
       throw Error();
     });
+  }
+
+  void _reloadList() {
+    _mealCategoryBloc.add(MealsCategoryReload());
   }
 
   Widget _buildList(List<MealsCategory> categories) {
@@ -46,19 +48,16 @@ class _MealsCategoryScreenState extends State<MealsCategoryScreen> {
         var item = categories[i];
         return Card(
           elevation: 2.0,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListTile(
-              leading: SizedBox(
-                child: Image.network(item.thumbnailUrl),
-                height: 200,
-                width: 100,
-              ),
-              minLeadingWidth: 0,
-              title: Text(item.name),
-              subtitle: Text(item.description, maxLines: 3, overflow: TextOverflow.ellipsis),
-              onTap: () {},
+          child: ListTile(
+            leading: SizedBox(
+              child: Image.network(item.thumbnailUrl),
+              height: 200,
+              width: 100,
             ),
+            minLeadingWidth: 0,
+            title: Text(item.name),
+            subtitle: Text(item.description, maxLines: 3, overflow: TextOverflow.ellipsis),
+            onTap: () {},
           ),
         );
       },

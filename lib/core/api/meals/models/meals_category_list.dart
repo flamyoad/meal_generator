@@ -3,18 +3,18 @@ import 'package:json_annotation/json_annotation.dart';
 part 'meals_category_list.g.dart';
 
 @JsonSerializable()
-class MealsCategoryList {
-  List<MealsCategory> categories;
+class MealsCategoryListJson {
+  List<MealsCategoryJson> categories;
 
-  MealsCategoryList(this.categories);
+  MealsCategoryListJson(this.categories);
 
-  factory MealsCategoryList.fromJson(Map<String, dynamic> json) => _$MealsCategoryListFromJson(json);
+  factory MealsCategoryListJson.fromJson(Map<String, dynamic> json) => _$MealsCategoryListFromJson(json);
 
   Map<String, dynamic> toJson() => _$MealsCategoryListToJson(this);
 }
 
 @JsonSerializable()
-class MealsCategory {
+class MealsCategoryJson {
   @JsonKey(name: 'idCategory')
   String id;
   @JsonKey(name: 'strCategory')
@@ -24,9 +24,9 @@ class MealsCategory {
   @JsonKey(name: 'strCategoryDescription')
   String description;
 
-  MealsCategory(this.id, this.name, this.description, this.thumbnailUrl);
+  MealsCategoryJson(this.id, this.name, this.description, this.thumbnailUrl);
 
-  factory MealsCategory.fromJson(Map<String, dynamic> json) => _$MealsCategoryFromJson(json);
+  factory MealsCategoryJson.fromJson(Map<String, dynamic> json) => _$MealsCategoryFromJson(json);
 
   Map<String, dynamic> toJson() => _$MealsCategoryToJson(this);
 }

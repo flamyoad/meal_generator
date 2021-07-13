@@ -13,7 +13,7 @@ class DrinksCategoryBloc extends Bloc<DrinksCategoryEvent, DrinksCategoryState> 
     if (event is DrinksCategoryInitialLoad) {
       yield DrinksCategoryLoading();
       yield await _proceedToLoad();
-    } else if (event is DrinksCategoryRefresh) {
+    } else if (event is DrinksCategoryReload) {
       yield DrinksCategoryLoading();
       yield await _proceedToLoad();
     }

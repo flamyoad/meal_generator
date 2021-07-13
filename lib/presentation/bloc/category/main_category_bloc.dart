@@ -1,13 +1,20 @@
 import 'package:bloc/bloc.dart';
-import 'package:meal_generator/core/repository/drinks/i_drinks_repository.dart';
-import 'package:meal_generator/core/repository/meals/i_meals_repository.dart';
+import 'package:meal_generator/presentation/bloc/category/drinks_category_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/main_category_event.dart';
 import 'package:meal_generator/presentation/bloc/category/main_category_state.dart';
+import 'package:meal_generator/presentation/bloc/category/meals_category_bloc.dart';
+import 'package:rxdart/rxdart.dart';
 
 class MainCategoryBloc extends Bloc<MainCategoryEvent, MainCategoryState> {
+  final MealsCategoryBloc mealsCategoryBloc;
+  final DrinksCategoryBloc drinksCategoryBloc;
 
-  MainCategoryBloc() : super(MainCategoryStateNotChosenMealAndDrinks());
-  
+  Stream<bool> userHasChosenMealsAndDrinks() =>
+      Rx.combineLatest2(mealsCategoryBloc.stream, drinksCategoryBloc.stream, (a, b) => false);
+
+  MainCategoryBloc({required this.mealsCategoryBloc, required this.drinksCategoryBloc})
+      : super(MainCategoryStateNotChosenMealAndDrinks());
+
   @override
   Stream<MainCategoryState> mapEventToState(MainCategoryEvent event) {
     throw UnimplementedError();

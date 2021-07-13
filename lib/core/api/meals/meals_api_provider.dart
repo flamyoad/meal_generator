@@ -10,11 +10,11 @@ class MealsApiProvider extends IApiProvider implements IMealsApiProvider {
   MealsApiProvider(INetworkClient client): super(client);
 
   @override
-  Future<MealsCategoryList> getAllCategories() async {
+  Future<MealsCategoryListJson> getAllCategories() async {
     try {
       var path = 'categories.php';
       var res = await client.get(path);
-      return MealsCategoryList.fromJson(res.data);
+      return MealsCategoryListJson.fromJson(res.data);
     } on DioError catch (exception) {
       throw exception;
     }

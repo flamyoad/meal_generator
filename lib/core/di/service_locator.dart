@@ -6,6 +6,7 @@ import 'package:meal_generator/core/api/drinks/drinks_api_provider.dart';
 import 'package:meal_generator/core/api/drinks/i_drinks_api_provider.dart';
 import 'package:meal_generator/core/api/meals/i_meals_api_provider.dart';
 import 'package:meal_generator/core/api/meals/meals_api_provider.dart';
+import 'package:meal_generator/core/mapper/meal_category_mapper.dart';
 import 'package:meal_generator/core/network/dio_network_client.dart';
 import 'package:meal_generator/core/network/i_network_client.dart';
 import 'package:meal_generator/core/repository/drinks/drinks_repository.dart';
@@ -16,12 +17,13 @@ import 'package:meal_generator/core/repository/meals/meals_repository.dart';
 final sl = GetIt.instance;
 
 Future<void> registerServiceLocator(Environment env) async {
-  registerNetworkClient(env);
-  registerApi();
-  registerRepository();
+  registerNetworkClients(env);
+  registerApis();
+  registerRepositories();
+  registerMappers();
 }
 
-void registerNetworkClient(Environment env) {
+void registerNetworkClients(Environment env) {
   sl.registerLazySingleton<INetworkClient>(() {
     var client = DioNetworkClient(
         options: BaseOptions(baseUrl: env.mealsEndPoint));
@@ -35,7 +37,7 @@ void registerNetworkClient(Environment env) {
   }, instanceName: 'Drinks');
 }
 
-void registerApi() {
+void registerApis() {
   sl.registerLazySingleton<IMealsApiProvider>(() {
     return MealsApiProvider(sl.get(instanceName: 'Meals'));
   });
@@ -45,12 +47,16 @@ void registerApi() {
   });
 }
 
-void registerRepository() {
+void registerRepositories() {
   sl.registerLazySingleton<IMealsRepository>(() {
-    return MealsRepository(sl.get());
+    return MealsRepository(sl.get(), sl.get());
   });
 
   sl.registerLazySingleton<IDrinkRepository>(() {
     return DrinksRepository(sl.get());
   });
+}
+
+void registerMappers() {
+  sl.registerLazySingleton<MealCategoryMapper>(() => MealCategoryMapper());
 }
