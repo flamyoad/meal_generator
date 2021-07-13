@@ -21,7 +21,7 @@ Map<String, dynamic> _$MealsCategoryListToJson(MealsCategoryList instance) =>
 
 MealsCategory _$MealsCategoryFromJson(Map<String, dynamic> json) {
   return MealsCategory(
-    json['idCategory'] as int,
+    json['idCategory'] as String,
     json['strCategory'] as String,
     json['strCategoryDescription'] as String,
     json['strCategoryThumb'] as String,

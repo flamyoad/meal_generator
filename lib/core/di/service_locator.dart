@@ -1,7 +1,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:meal_generator/core/api/api_environment.dart';
+import 'package:meal_generator/core/api/environment.dart';
 import 'package:meal_generator/core/api/drinks/drinks_api_provider.dart';
 import 'package:meal_generator/core/api/drinks/i_drinks_api_provider.dart';
 import 'package:meal_generator/core/api/meals/i_meals_api_provider.dart';
@@ -15,13 +15,13 @@ import 'package:meal_generator/core/repository/meals/meals_repository.dart';
 
 final sl = GetIt.instance;
 
-Future<void> registerServiceLocator(ApiEnvironment env) async {
+Future<void> registerServiceLocator(Environment env) async {
   registerNetworkClient(env);
   registerApi();
   registerRepository();
 }
 
-void registerNetworkClient(ApiEnvironment env) {
+void registerNetworkClient(Environment env) {
   sl.registerLazySingleton<INetworkClient>(() {
     var client = DioNetworkClient(
         options: BaseOptions(baseUrl: env.mealsEndPoint));

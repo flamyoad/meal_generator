@@ -1,11 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_generator/core/api/environment.dart';
+import 'package:meal_generator/core/di/service_locator.dart';
+import 'package:meal_generator/core/repository/meals/i_meals_repository.dart';
+import 'package:meal_generator/presentation/bloc/category/meals_category_bloc.dart';
+import 'package:meal_generator/presentation/bloc/category/meals_category_state.dart';
+import 'package:meal_generator/presentation/widget/category/main_category_screen.dart';
+import 'package:meal_generator/presentation/widget/category/meals_category_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider<MealsCategoryBloc>(
+        create: (context) =>
+            MealsCategoryBloc(sl.get<IMealsRepository>(), MealsCategoryLoading()))
+  ], child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    registerServiceLocator(DevEnvironment());
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,53 +35,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+      home: SafeArea(
+        child: MainCategoryScreen()
+      )
     );
   }
 }

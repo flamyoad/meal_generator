@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:meal_generator/core/api/api_environment.dart';
+import 'package:meal_generator/core/api/environment.dart';
 import 'package:meal_generator/core/api/drinks/i_drinks_api_provider.dart';
 import 'package:meal_generator/core/api/drinks/models/drinks.dart';
 import 'package:meal_generator/core/api/drinks/models/drinks_category_list.dart';

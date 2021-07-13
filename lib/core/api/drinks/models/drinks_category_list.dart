@@ -4,6 +4,7 @@ part 'drinks_category_list.g.dart';
 
 @JsonSerializable()
 class DrinksCategoryList {
+  @JsonKey(name: 'drinks')
   List<DrinksCategory> categories;
 
   DrinksCategoryList(this.categories);
@@ -15,12 +16,9 @@ class DrinksCategoryList {
 
 @JsonSerializable()
 class DrinksCategory {
-  @JsonKey(name: 'idCategory') int id;
   @JsonKey(name: 'strCategory') String name;
-  @JsonKey(name: 'strCategoryThumb') String thumbnailUrl;
-  @JsonKey(name: 'strCategoryDescription') String description;
 
-  DrinksCategory(this.id, this.name, this.thumbnailUrl, this.description);
+  DrinksCategory(this.name);
 
   factory DrinksCategory.fromJson(Map<String, dynamic> json) => _$DrinksCategoryFromJson(json);
 

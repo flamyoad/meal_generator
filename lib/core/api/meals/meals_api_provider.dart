@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:meal_generator/core/api/i_api_provider.dart';
 import 'package:meal_generator/core/api/meals/i_meals_api_provider.dart';
 import 'package:meal_generator/core/api/meals/models/meals.dart';
@@ -9,9 +10,14 @@ class MealsApiProvider extends IApiProvider implements IMealsApiProvider {
   MealsApiProvider(INetworkClient client): super(client);
 
   @override
-  Future<MealsCategoryList> getAllCategories() {
-    // TODO: implement getAllCategories
-    throw UnimplementedError();
+  Future<MealsCategoryList> getAllCategories() async {
+    try {
+      var path = 'categories.php';
+      var res = await client.get(path);
+      return MealsCategoryList.fromJson(res.data);
+    } on DioError catch (exception) {
+      throw exception;
+    }
   }
 
   @override

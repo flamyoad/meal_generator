@@ -16,7 +16,7 @@ class MealsCategoryList {
 @JsonSerializable()
 class MealsCategory {
   @JsonKey(name: 'idCategory')
-  int id;
+  String id;
   @JsonKey(name: 'strCategory')
   String name;
   @JsonKey(name: 'strCategoryThumb')
