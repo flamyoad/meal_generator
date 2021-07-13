@@ -6,26 +6,26 @@ part of 'drinks_category_list.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DrinksCategoryList _$DrinksCategoryListFromJson(Map<String, dynamic> json) {
-  return DrinksCategoryList(
+DrinksCategoryListJson _$DrinksCategoryListFromJson(Map<String, dynamic> json) {
+  return DrinksCategoryListJson(
     (json['drinks'] as List<dynamic>)
-        .map((e) => DrinksCategory.fromJson(e as Map<String, dynamic>))
+        .map((e) => DrinksCategoryJson.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 }
 
-Map<String, dynamic> _$DrinksCategoryListToJson(DrinksCategoryList instance) =>
+Map<String, dynamic> _$DrinksCategoryListToJson(DrinksCategoryListJson instance) =>
     <String, dynamic>{
       'drinks': instance.categories,
     };
 
-DrinksCategory _$DrinksCategoryFromJson(Map<String, dynamic> json) {
-  return DrinksCategory(
+DrinksCategoryJson _$DrinksCategoryFromJson(Map<String, dynamic> json) {
+  return DrinksCategoryJson(
     json['strCategory'] as String,
   );
 }
 
-Map<String, dynamic> _$DrinksCategoryToJson(DrinksCategory instance) =>
+Map<String, dynamic> _$DrinksCategoryToJson(DrinksCategoryJson instance) =>
     <String, dynamic>{
       'strCategory': instance.name,
     };

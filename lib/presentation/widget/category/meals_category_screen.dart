@@ -30,6 +30,10 @@ class _MealsCategoryScreenState extends State<MealsCategoryScreen> {
         return ListLoadingIndicator();
       } else if (state is MealsCategoryLoaded) {
         return _buildList(state.items);
+      } else if (state is MealsCategorySelected) {
+        return _buildList(state.items);
+      } else if (state is MealsCategoryUnselected) {
+        return _buildList(state.items);
       } else if (state is MealsCategoryError) {
         return ListErrorIndicator(_reloadList);
       }
@@ -49,19 +53,35 @@ class _MealsCategoryScreenState extends State<MealsCategoryScreen> {
         return Card(
           elevation: 2.0,
           child: ListTile(
-            leading: SizedBox(
-              child: Image.network(item.thumbnailUrl),
-              height: 200,
-              width: 100,
-            ),
-            minLeadingWidth: 0,
+            leading: _buildPhoto(item),
             title: Text(item.name),
             subtitle: Text(item.description, maxLines: 3, overflow: TextOverflow.ellipsis),
-            onTap: () {},
+            onTap: () {
+              _mealCategoryBloc.add(MealsCategoryClicked(item));
+            },
           ),
         );
       },
       childCount: categories.length,
     ));
+  }
+
+  Widget _buildPhoto(MealsCategory item) {
+    return SizedBox(
+      child: Stack(
+        children: [
+          Opacity(
+              child: Image.network(item.thumbnailUrl), opacity: item.isSelected ? 0.5 : 1.0),
+          Center(
+            child: Visibility(
+              child: Icon(Icons.done, color: Colors.redAccent, size: 50.0),
+              visible: item.isSelected,
+            ),
+          )
+        ],
+      ),
+      height: 250,
+      width: 120,
+    );
   }
 }

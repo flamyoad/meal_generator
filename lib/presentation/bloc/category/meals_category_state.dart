@@ -6,8 +6,7 @@ class MealsCategoryState extends Equatable {
   List<Object?> get props => [];
 }
 
-class MealsCategoryLoading extends MealsCategoryState {
-}
+class MealsCategoryLoading extends MealsCategoryState {}
 
 class MealsCategoryLoaded extends MealsCategoryState {
   final List<MealsCategory> items;
@@ -25,4 +24,22 @@ class MealsCategoryError extends MealsCategoryState {
 
   @override
   List<Object?> get props => [exception];
+}
+
+class MealsCategorySelected extends MealsCategoryState {
+  final List<MealsCategory> items;
+
+  MealsCategorySelected(this.items);
+
+  @override
+  List<Object?> get props => items;
+}
+
+class MealsCategoryUnselected extends MealsCategoryState {
+  final List<MealsCategory> items;
+
+  MealsCategoryUnselected(this.items);
+
+  @override
+  List<Object?> get props => items;
 }

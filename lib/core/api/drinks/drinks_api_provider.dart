@@ -11,11 +11,11 @@ class DrinksApiProvider extends IApiProvider implements IDrinksApiProvider {
   DrinksApiProvider(INetworkClient client) : super(client);
 
   @override
-  Future<DrinksCategoryList> getAllCategories() async {
+  Future<DrinksCategoryListJson> getAllCategories() async {
     try {
       var path = 'list.php?c=list';
       var res = await client.get(path);
-      return DrinksCategoryList.fromJson(res.data);
+      return DrinksCategoryListJson.fromJson(res.data);
     } on DioError catch (exception) {
       throw exception; // Rethrow the exception. todo: Handle the exception
     }

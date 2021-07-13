@@ -5,6 +5,7 @@ import 'package:meal_generator/core/api/drinks/models/drinks_category_list.dart'
 import 'package:meal_generator/presentation/bloc/category/drinks_category_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/drinks_category_event.dart';
 import 'package:meal_generator/presentation/bloc/category/drinks_category_state.dart';
+import 'package:meal_generator/presentation/models/drinks_category.dart';
 import 'package:meal_generator/presentation/widget/list_error_indicator.dart';
 
 import '../list_loading_indicator.dart';
@@ -31,6 +32,10 @@ class DrinksCategoryScreenState extends State<DrinksCategoryScreen> {
         return ListLoadingIndicator();
       } else if (state is DrinksCategoryLoaded) {
         return _buildList(state.items);
+      } else if (state is DrinksCategorySelected) {
+        return _buildList(state.items);
+      } else if (state is DrinksCategoryUnselected) {
+        return _buildList(state.items);
       } else if (state is DrinksCategoryError) {
         return ListErrorIndicator(_reloadList);
       } else {
@@ -52,9 +57,12 @@ class DrinksCategoryScreenState extends State<DrinksCategoryScreen> {
           child: Card(
             elevation: 2.0,
             child: ListTile(
-              leading: Icon(Icons.local_drink_rounded, color: Colors.purple),
+              leading: Icon(Icons.local_drink_rounded,
+                  color: item.isSelected ? Colors.blue : Colors.grey),
               title: Text(item.name),
-              onTap: () {},
+              onTap: () {
+                _drinksBloc.add(DrinksCategoryClicked(item));
+              },
             ),
           ),
         );

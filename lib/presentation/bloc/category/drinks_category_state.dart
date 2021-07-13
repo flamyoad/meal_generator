@@ -1,13 +1,12 @@
 import 'package:equatable/equatable.dart';
-import 'package:meal_generator/core/api/drinks/models/drinks_category_list.dart';
+import 'package:meal_generator/presentation/models/drinks_category.dart';
 
 class DrinksCategoryState extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class DrinksCategoryLoading extends DrinksCategoryState {
-}
+class DrinksCategoryLoading extends DrinksCategoryState {}
 
 class DrinksCategoryLoaded extends DrinksCategoryState {
   final List<DrinksCategory> items;
@@ -25,4 +24,22 @@ class DrinksCategoryError extends DrinksCategoryState {
 
   @override
   List<Object?> get props => [exception];
+}
+
+class DrinksCategorySelected extends DrinksCategoryState {
+  final List<DrinksCategory> items;
+
+  DrinksCategorySelected(this.items);
+
+  @override
+  List<Object?> get props => items;
+}
+
+class DrinksCategoryUnselected extends DrinksCategoryState {
+  final List<DrinksCategory> items;
+
+  DrinksCategoryUnselected(this.items);
+
+  @override
+  List<Object?> get props => items;
 }

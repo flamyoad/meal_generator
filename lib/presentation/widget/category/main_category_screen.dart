@@ -40,7 +40,7 @@ class _MainCategoryScreenState extends State<MainCategoryScreen> {
           var isEnabled = snapshot.data ?? false;
           return FloatingActionButton(
               onPressed: isEnabled ?  _displayLunchScreen : null,
-              backgroundColor: isEnabled ? Colors.grey : null, // todo: why cannot chg color?
+              backgroundColor: isEnabled ? null : Colors.grey, // null means use inherited theme color
               child: Icon(
                 Icons.shopping_cart,
               ));
