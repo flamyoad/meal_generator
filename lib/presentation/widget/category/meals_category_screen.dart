@@ -7,6 +7,7 @@ import 'package:meal_generator/core/repository/meals/i_meals_repository.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_event.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_state.dart';
+import 'package:meal_generator/presentation/widget/category/list_loading_indicator.dart';
 
 class MealsCategoryScreen extends StatefulWidget {
   @override
@@ -27,36 +28,41 @@ class _MealsCategoryScreenState extends State<MealsCategoryScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<MealsCategoryBloc, MealsCategoryState>(builder: (context, state) {
       if (state is MealsCategoryLoading) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
+        return ListLoadingIndicator();
       } else if (state is MealsCategoryLoaded) {
-        return Container(
-          child: _buildList(state.items),
-        );
+        // return _buildList(state.items);
+        return _buildList(state.items);
       } else if (state is MealsCategoryError) {
-        return Text('Error');
+        return SliverToBoxAdapter(child: Text('Error'));
       }
-      return Text('Unknown state');
+      throw Error();
     });
   }
 
   Widget _buildList(List<MealsCategory> categories) {
-    return ListView.builder(
-        itemCount: categories.length,
-        itemBuilder: (context, i) {
-          var item = categories[i];
-          return ListTile(
-            leading: SizedBox(
-              child: Image.network(item.thumbnailUrl),
-              height: 200,
-              width: 100,
+    return SliverList(
+        delegate: SliverChildBuilderDelegate(
+      (context, i) {
+        var item = categories[i];
+        return Card(
+          elevation: 2.0,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              leading: SizedBox(
+                child: Image.network(item.thumbnailUrl),
+                height: 200,
+                width: 100,
+              ),
+              minLeadingWidth: 0,
+              title: Text(item.name),
+              subtitle: Text(item.description, maxLines: 3, overflow: TextOverflow.ellipsis),
+              onTap: () {},
             ),
-            minLeadingWidth: 0,
-            title: Text(item.name),
-            subtitle: Text(item.description, maxLines: 3, overflow: TextOverflow.ellipsis),
-            onTap: () {},
-          );
-        });
+          ),
+        );
+      },
+      childCount: categories.length,
+    ));
   }
 }

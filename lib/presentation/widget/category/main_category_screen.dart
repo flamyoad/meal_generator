@@ -31,7 +31,13 @@ class _MainCategoryScreenState extends State<MainCategoryScreen> {
                   DrinksCategoryBloc(sl.get<IDrinkRepository>(), DrinksCategoryLoading()))
         ],
         child: Scaffold(
-          body: DrinksCategoryScreen(),
+          body: CustomScrollView(
+            shrinkWrap: true, // if set to false, exception will be thrown wh?y?
+            slivers: [
+              MealsCategoryScreen(),
+              DrinksCategoryScreen(),
+            ],
+          ),
         ));
   }
 

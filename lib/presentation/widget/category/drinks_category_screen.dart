@@ -6,17 +6,19 @@ import 'package:meal_generator/presentation/bloc/category/drinks_category_bloc.d
 import 'package:meal_generator/presentation/bloc/category/drinks_category_event.dart';
 import 'package:meal_generator/presentation/bloc/category/drinks_category_state.dart';
 
+import 'list_loading_indicator.dart';
+
 class DrinksCategoryScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => DrinksCategoryScreenState();
 }
 
 class DrinksCategoryScreenState extends State<DrinksCategoryScreen> {
-
   late DrinksCategoryBloc drinksBloc;
 
   @override
   void initState() {
+    super.initState();
     drinksBloc = BlocProvider.of<DrinksCategoryBloc>(context);
     drinksBloc.add(DrinksCategoryInitialLoad());
   }
@@ -25,13 +27,9 @@ class DrinksCategoryScreenState extends State<DrinksCategoryScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<DrinksCategoryBloc, DrinksCategoryState>(builder: (context, state) {
       if (state is DrinksCategoryLoading) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
+        return ListLoadingIndicator();
       } else if (state is DrinksCategoryLoaded) {
-        return Container(
-          child: _buildList(state.items),
-        );
+        return _buildList(state.items);
       } else if (state is DrinksCategoryError) {
         return Text('Error');
       } else {
@@ -41,13 +39,21 @@ class DrinksCategoryScreenState extends State<DrinksCategoryScreen> {
   }
 
   Widget _buildList(List<DrinksCategory> categories) {
-    return ListView.builder(itemBuilder: (context, i) {
-      var item = categories[i];
-      return ListTile(
-        leading: Icon(Icons.local_drink_rounded, color: Colors.purple),
-        title: Text(item.name),
-        onTap: () {},
-      );
-    }, itemCount: categories.length,);
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((context, i) {
+        var item = categories[i];
+        return Container(
+          margin: const EdgeInsets.all(4.0),
+          child: Card(
+            elevation: 2.0,
+            child: ListTile(
+              leading: Icon(Icons.local_drink_rounded, color: Colors.purple),
+              title: Text(item.name),
+              onTap: () {},
+            ),
+          ),
+        );
+      }, childCount: categories.length),
+    );
   }
 }
