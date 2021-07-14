@@ -1,8 +1,8 @@
 import 'package:meal_generator/core/api/meals/models/meals_category_list.dart';
 
-import 'models/meals.dart';
+import 'models/meals_list.dart';
 
 abstract class IMealsApiProvider {
-  Future<MealsCategoryListJson> getAllCategories();
-  Future <Meals> getDrinkByCategory(String categoryName);
+  Future<MealsCategoryList> getAllCategories();
+  Future <MealsList> getAllMealsByCategory(String categoryName);
 }

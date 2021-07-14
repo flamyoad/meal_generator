@@ -1,11 +1,11 @@
-class MealsCategory {
+class UiMealsCategory {
   String id;
   String name;
   String thumbnailUrl;
   String description;
   bool isSelected;
 
-  MealsCategory(
+  UiMealsCategory(
       {required this.id,
       required this.name,
       required this.thumbnailUrl,

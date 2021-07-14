@@ -2,6 +2,6 @@ class MainCategoryState {
 
 }
 
-class MainCategoryStateNotChosenMealAndDrinks extends MainCategoryState {
+class MainCategoryHasNotChosenMealAndDrinks extends MainCategoryState {
 
 }

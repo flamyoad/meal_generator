@@ -2,14 +2,14 @@ import 'package:bloc/bloc.dart';
 import 'package:meal_generator/core/repository/drinks/i_drinks_repository.dart';
 import 'package:meal_generator/presentation/bloc/category/drinks_category_event.dart';
 import 'package:meal_generator/presentation/bloc/category/drinks_category_state.dart';
-import 'package:meal_generator/presentation/models/drinks_category.dart';
+import 'package:meal_generator/presentation/models/ui_drinks_category.dart';
 
 class DrinksCategoryBloc extends Bloc<DrinksCategoryEvent, DrinksCategoryState> {
-  late IDrinkRepository drinksRepo;
+  late IDrinksRepository drinksRepo;
 
-  List<DrinksCategory> drinksCategories = List.empty();
+  List<UiDrinksCategory> drinksCategories = List.empty();
 
-  DrinksCategoryBloc(this.drinksRepo, DrinksCategoryState initialState) : super(initialState);
+  DrinksCategoryBloc(this.drinksRepo) : super(DrinksCategoryLoading());
 
   @override
   Stream<DrinksCategoryState> mapEventToState(DrinksCategoryEvent event) async* {
@@ -38,10 +38,10 @@ class DrinksCategoryBloc extends Bloc<DrinksCategoryEvent, DrinksCategoryState> 
     });
   }
 
-  DrinksCategoryState _itemClicked(DrinksCategory clickedItem) {
+  DrinksCategoryState _itemClicked(UiDrinksCategory clickedItem) {
     bool newState = !clickedItem.isSelected;
     var newList = drinksCategories
-        .map((it) => DrinksCategory(
+        .map((it) => UiDrinksCategory(
         name: it.name,
         isSelected: (it.name == clickedItem.name) ? newState : it.isSelected)
     ).toList();

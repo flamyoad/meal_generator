@@ -6,7 +6,7 @@ import 'package:meal_generator/core/di/service_locator.dart';
 import 'package:meal_generator/core/repository/meals/i_meals_repository.dart';
 import 'package:meal_generator/presentation/bloc/category/drinks_category_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/drinks_category_state.dart';
-import 'package:meal_generator/presentation/bloc/category/main_category_bloc.dart';
+import 'package:meal_generator/presentation/bloc/category/main_category_cubit.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_state.dart';
 import 'package:meal_generator/presentation/widget/category/main_category_screen.dart';
@@ -34,20 +34,18 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.purple,
         ),
         onGenerateRoute: (RouteSettings routeSettings) {
           return AppRoutes.generateRoute(routeSettings, context);
         },
         home: MultiBlocProvider(providers: [
           BlocProvider<MealsCategoryBloc>(
-              create: (context) =>
-                  MealsCategoryBloc(sl.get<IMealsRepository>(), MealsCategoryLoading())),
+              create: (context) => MealsCategoryBloc(sl.get<IMealsRepository>())),
           BlocProvider<DrinksCategoryBloc>(
-              create: (context) =>
-                  DrinksCategoryBloc(sl.get<IDrinkRepository>(), DrinksCategoryLoading())),
-          BlocProvider<MainCategoryBloc>(
-              create: (context) => MainCategoryBloc(
+              create: (context) => DrinksCategoryBloc(sl.get<IDrinksRepository>())),
+          BlocProvider<MainCategoryCubit>(
+              create: (context) => MainCategoryCubit(
                   mealsCategoryBloc: BlocProvider.of<MealsCategoryBloc>(context),
                   drinksCategoryBloc: BlocProvider.of<DrinksCategoryBloc>(context))),
         ], child: MainCategoryScreen()));

@@ -1,16 +1,16 @@
 import 'package:meal_generator/core/api/meals/models/meals_category_list.dart';
 import 'package:meal_generator/core/mapper/mapper.dart';
-import 'package:meal_generator/presentation/models/meals_category.dart';
+import 'package:meal_generator/presentation/models/ui_meals_category.dart';
 
-class MealCategoryMapper extends Mapper<MealsCategoryJson, MealsCategory> {
+class MealCategoryMapper extends Mapper<MealsCategory, UiMealsCategory> {
   @override
-  MealsCategoryJson from(MealsCategory? output) {
+  MealsCategory from(UiMealsCategory? output) {
     throw UnimplementedError(); // Not used
   }
 
   @override
-  MealsCategory to(MealsCategoryJson? input) {
-    return MealsCategory(id: input?.id ?? "-1",
+  UiMealsCategory to(MealsCategory? input) {
+    return UiMealsCategory(id: input?.id ?? "-1",
         name: input?.name ?? "",
         thumbnailUrl: input?.thumbnailUrl ?? "",
         description: input?.description ?? "",

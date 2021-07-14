@@ -1,7 +1,8 @@
+import 'package:dartz/dartz.dart' hide State;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:meal_generator/presentation/bloc/category/main_category_bloc.dart';
+import 'package:meal_generator/presentation/bloc/category/main_category_cubit.dart';
 import 'package:meal_generator/presentation/widget/category/drinks_category_screen.dart';
 import 'package:meal_generator/presentation/widget/category/meals_category_screen.dart';
 import 'package:meal_generator/core/app_path.dart' as app_path;
@@ -12,12 +13,12 @@ class MainCategoryScreen extends StatefulWidget {
 }
 
 class _MainCategoryScreenState extends State<MainCategoryScreen> {
-  late MainCategoryBloc _mainCategoryBloc;
+  late MainCategoryCubit _mainCategoryBloc;
 
   @override
   void initState() {
     super.initState();
-    _mainCategoryBloc = BlocProvider.of<MainCategoryBloc>(context);
+    _mainCategoryBloc = BlocProvider.of<MainCategoryCubit>(context);
   }
 
   @override
@@ -40,8 +41,9 @@ class _MainCategoryScreenState extends State<MainCategoryScreen> {
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           var isEnabled = snapshot.data ?? false;
           return FloatingActionButton(
-              onPressed: isEnabled ?  () => _displayLunchScreen(context) : null,
-              backgroundColor: isEnabled ? null : Colors.grey, // null means use inherited theme color
+              onPressed: isEnabled ? () => _displayLunchScreen(context) : null,
+              backgroundColor: isEnabled ? null : Colors.grey,
+              // null means use inherited theme color
               child: Icon(
                 Icons.shopping_cart,
               ));
@@ -56,6 +58,7 @@ class _MainCategoryScreenState extends State<MainCategoryScreen> {
     if (mealsCategory == null || drinksCategory == null) {
       return;
     }
-    Navigator.pushNamed(context, app_path.lunch);
+    Navigator.pushNamed(context, app_path.lunch,
+        arguments: Tuple2(mealsCategory.name, drinksCategory.name));
   }
 }

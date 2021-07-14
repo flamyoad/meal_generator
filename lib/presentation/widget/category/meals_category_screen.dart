@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_event.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_state.dart';
-import 'package:meal_generator/presentation/models/meals_category.dart';
+import 'package:meal_generator/presentation/models/ui_meals_category.dart';
 import 'package:meal_generator/presentation/widget/list_error_indicator.dart';
 import 'package:meal_generator/presentation/widget/list_loading_indicator.dart';
 
@@ -45,7 +45,7 @@ class _MealsCategoryScreenState extends State<MealsCategoryScreen> {
     _mealCategoryBloc.add(MealsCategoryReload());
   }
 
-  Widget _buildList(List<MealsCategory> categories) {
+  Widget _buildList(List<UiMealsCategory> categories) {
     return SliverList(
         delegate: SliverChildBuilderDelegate(
       (context, i) {
@@ -66,7 +66,7 @@ class _MealsCategoryScreenState extends State<MealsCategoryScreen> {
     ));
   }
 
-  Widget _buildPhoto(MealsCategory item) {
+  Widget _buildPhoto(UiMealsCategory item) {
     return SizedBox(
       child: Stack(
         children: [

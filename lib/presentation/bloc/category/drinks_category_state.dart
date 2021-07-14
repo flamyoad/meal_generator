@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:meal_generator/presentation/models/drinks_category.dart';
+import 'package:meal_generator/presentation/models/ui_drinks_category.dart';
 
 class DrinksCategoryState extends Equatable {
   @override
@@ -9,7 +9,7 @@ class DrinksCategoryState extends Equatable {
 class DrinksCategoryLoading extends DrinksCategoryState {}
 
 class DrinksCategoryLoaded extends DrinksCategoryState {
-  final List<DrinksCategory> items;
+  final List<UiDrinksCategory> items;
 
   DrinksCategoryLoaded(this.items);
 
@@ -27,11 +27,11 @@ class DrinksCategoryError extends DrinksCategoryState {
 }
 
 class DrinksCategorySelected extends DrinksCategoryState {
-  final List<DrinksCategory> items;
+  final List<UiDrinksCategory> items;
 
   DrinksCategorySelected(this.items);
 
-  DrinksCategory? getSelectedCategory() {
+  UiDrinksCategory? getSelectedCategory() {
     try {
       return items.firstWhere((it) => it.isSelected);
     } on StateError {
@@ -44,7 +44,7 @@ class DrinksCategorySelected extends DrinksCategoryState {
 }
 
 class DrinksCategoryUnselected extends DrinksCategoryState {
-  final List<DrinksCategory> items;
+  final List<UiDrinksCategory> items;
 
   DrinksCategoryUnselected(this.items);
 

@@ -9,17 +9,34 @@ class LunchItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.network(imageUrl,
-            fit: BoxFit.fill,
-            loadingBuilder: (context, child, loadingProgress) => CircularProgressIndicator()),
-        Container(
-          margin: EdgeInsets.only(top: 8.0),
-          child: Text(name),
-        )
-      ],
+    return Card(
+      elevation: 2.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0)
+      ),
+      child: InkWell(
+        onTap: () {},
+        child: Column(
+          children: [
+            Image.network(imageUrl, fit: BoxFit.contain,
+                width: 500,
+                height: 200,
+                loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) {
+                return child;
+              }
+              return CircularProgressIndicator();
+            }),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Container(
+                margin: EdgeInsets.only(top: 16.0),
+                child: Text(name),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
-
 }

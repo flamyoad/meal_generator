@@ -2,14 +2,14 @@ import 'package:bloc/bloc.dart';
 import 'package:meal_generator/core/repository/meals/i_meals_repository.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_event.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_state.dart';
-import 'package:meal_generator/presentation/models/meals_category.dart';
+import 'package:meal_generator/presentation/models/ui_meals_category.dart';
 
 class MealsCategoryBloc extends Bloc<MealsCategoryEvent, MealsCategoryState> {
-  final IMealsRepository mealRepo;
+  final IMealsRepository mealsRepo;
 
-  List<MealsCategory> mealCategories = List.empty();
+  List<UiMealsCategory> mealsCategories = List.empty();
 
-  MealsCategoryBloc(this.mealRepo, MealsCategoryState initialState) : super(initialState);
+  MealsCategoryBloc(this.mealsRepo) : super(MealsCategoryLoading());
 
   @override
   Stream<MealsCategoryState> mapEventToState(MealsCategoryEvent event) async* {
@@ -30,19 +30,19 @@ class MealsCategoryBloc extends Bloc<MealsCategoryEvent, MealsCategoryState> {
   }
 
   Future<MealsCategoryState> _proceedToLoad() async {
-    var result = await mealRepo.getAllCategories();
+    var result = await mealsRepo.getAllCategories();
 
-    return result.fold((exception) => MealsCategoryError(exception), (mealCategories) {
-      this.mealCategories = mealCategories;
-      return MealsCategoryLoaded(mealCategories);
+    return result.fold((exception) => MealsCategoryError(exception), (mealsCategories) {
+      this.mealsCategories = mealsCategories;
+      return MealsCategoryLoaded(mealsCategories);
     });
   }
 
-  MealsCategoryState _itemClicked(MealsCategory clickedItem) {
+  MealsCategoryState _itemClicked(UiMealsCategory clickedItem) {
     // Reverses the state of the item clicked.
     bool newState = !clickedItem.isSelected;
-    var newList = mealCategories
-        .map((it) => MealsCategory(
+    var newList = mealsCategories
+        .map((it) => UiMealsCategory(
             id: it.id,
             name: it.name,
             thumbnailUrl: it.thumbnailUrl,

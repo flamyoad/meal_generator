@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:meal_generator/presentation/models/meals_category.dart';
+import 'package:meal_generator/presentation/models/ui_meals_category.dart';
 
 class MealsCategoryState extends Equatable {
   @override
@@ -9,7 +9,7 @@ class MealsCategoryState extends Equatable {
 class MealsCategoryLoading extends MealsCategoryState {}
 
 class MealsCategoryLoaded extends MealsCategoryState {
-  final List<MealsCategory> items;
+  final List<UiMealsCategory> items;
 
   MealsCategoryLoaded(this.items);
 
@@ -27,11 +27,11 @@ class MealsCategoryError extends MealsCategoryState {
 }
 
 class MealsCategorySelected extends MealsCategoryState {
-  final List<MealsCategory> items;
+  final List<UiMealsCategory> items;
 
   MealsCategorySelected(this.items);
 
-  MealsCategory? getSelectedCategory() {
+  UiMealsCategory? getSelectedCategory() {
     try {
       return items.firstWhere((it) => it.isSelected);
     } on StateError {
@@ -44,7 +44,7 @@ class MealsCategorySelected extends MealsCategoryState {
 }
 
 class MealsCategoryUnselected extends MealsCategoryState {
-  final List<MealsCategory> items;
+  final List<UiMealsCategory> items;
 
   MealsCategoryUnselected(this.items);
 

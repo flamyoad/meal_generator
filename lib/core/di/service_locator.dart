@@ -50,7 +50,7 @@ void registerRepositories() {
     return MealsRepository(sl.get(), sl.get());
   });
 
-  sl.registerLazySingleton<IDrinkRepository>(() {
+  sl.registerLazySingleton<IDrinksRepository>(() {
     return DrinksRepository(sl.get(), sl.get());
   });
 }

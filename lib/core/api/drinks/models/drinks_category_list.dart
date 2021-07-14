@@ -3,24 +3,24 @@ import 'package:json_annotation/json_annotation.dart';
 part 'drinks_category_list.g.dart';
 
 @JsonSerializable()
-class DrinksCategoryListJson {
+class DrinksCategoryList {
   @JsonKey(name: 'drinks')
-  List<DrinksCategoryJson> categories;
+  List<DrinksCategory> categories;
 
-  DrinksCategoryListJson(this.categories);
+  DrinksCategoryList(this.categories);
 
-  factory DrinksCategoryListJson.fromJson(Map<String, dynamic> json) => _$DrinksCategoryListFromJson(json);
+  factory DrinksCategoryList.fromJson(Map<String, dynamic> json) => _$DrinksCategoryListFromJson(json);
 
   Map<String, dynamic> toJson() => _$DrinksCategoryListToJson(this);
 }
 
 @JsonSerializable()
-class DrinksCategoryJson {
+class DrinksCategory {
   @JsonKey(name: 'strCategory') String name;
 
-  DrinksCategoryJson(this.name);
+  DrinksCategory(this.name);
 
-  factory DrinksCategoryJson.fromJson(Map<String, dynamic> json) => _$DrinksCategoryFromJson(json);
+  factory DrinksCategory.fromJson(Map<String, dynamic> json) => _$DrinksCategoryFromJson(json);
 
   Map<String, dynamic> toJson() => _$DrinksCategoryToJson(this);
 }

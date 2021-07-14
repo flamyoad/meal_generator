@@ -1,15 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/drinks_category_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/drinks_category_state.dart';
-import 'package:meal_generator/presentation/bloc/category/main_category_event.dart';
 import 'package:meal_generator/presentation/bloc/category/main_category_state.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_state.dart';
-import 'package:meal_generator/presentation/models/drinks_category.dart';
-import 'package:meal_generator/presentation/models/meals_category.dart';
+import 'package:meal_generator/presentation/models/ui_drinks_category.dart';
+import 'package:meal_generator/presentation/models/ui_meals_category.dart';
 import 'package:rxdart/rxdart.dart';
 
-class MainCategoryBloc extends Bloc<MainCategoryEvent, MainCategoryState> {
+class MainCategoryCubit extends Cubit<MainCategoryState> {
   final MealsCategoryBloc mealsCategoryBloc;
   final DrinksCategoryBloc drinksCategoryBloc;
 
@@ -18,15 +17,10 @@ class MainCategoryBloc extends Bloc<MainCategoryEvent, MainCategoryState> {
         return meals is MealsCategorySelected && drinks is DrinksCategorySelected;
       });
 
-  MainCategoryBloc({required this.mealsCategoryBloc, required this.drinksCategoryBloc})
-      : super(MainCategoryStateNotChosenMealAndDrinks());
+  MainCategoryCubit({required this.mealsCategoryBloc, required this.drinksCategoryBloc})
+      : super(MainCategoryHasNotChosenMealAndDrinks());
 
-  @override
-  Stream<MainCategoryState> mapEventToState(MainCategoryEvent event) {
-    throw UnimplementedError();
-  }
-
-  MealsCategory? getSelectedMealsCategory() {
+  UiMealsCategory? getSelectedMealsCategory() {
     var state = mealsCategoryBloc.state;
     if (state is MealsCategorySelected) {
       return state.getSelectedCategory();
@@ -34,7 +28,7 @@ class MainCategoryBloc extends Bloc<MainCategoryEvent, MainCategoryState> {
     return null;
   }
 
-  DrinksCategory? getSelectedDrinksCategory() {
+  UiDrinksCategory? getSelectedDrinksCategory() {
     var state = drinksCategoryBloc.state;
     if (state is DrinksCategorySelected) {
       return state.getSelectedCategory();

@@ -5,7 +5,7 @@ import 'package:meal_generator/core/api/drinks/models/drinks_category_list.dart'
 import 'package:meal_generator/presentation/bloc/category/drinks_category_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/drinks_category_event.dart';
 import 'package:meal_generator/presentation/bloc/category/drinks_category_state.dart';
-import 'package:meal_generator/presentation/models/drinks_category.dart';
+import 'package:meal_generator/presentation/models/ui_drinks_category.dart';
 import 'package:meal_generator/presentation/widget/list_error_indicator.dart';
 
 import '../list_loading_indicator.dart';
@@ -48,7 +48,7 @@ class DrinksCategoryScreenState extends State<DrinksCategoryScreen> {
     _drinksBloc.add(DrinksCategoryReload());
   }
 
-  Widget _buildList(List<DrinksCategory> categories) {
+  Widget _buildList(List<UiDrinksCategory> categories) {
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, i) {
         var item = categories[i];
