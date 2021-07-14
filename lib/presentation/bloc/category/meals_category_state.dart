@@ -31,6 +31,14 @@ class MealsCategorySelected extends MealsCategoryState {
 
   MealsCategorySelected(this.items);
 
+  MealsCategory? getSelectedCategory() {
+    try {
+      return items.firstWhere((it) => it.isSelected);
+    } on StateError {
+      return null;
+    }
+  }
+
   @override
   List<Object?> get props => items;
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/main_category_bloc.dart';
 import 'package:meal_generator/presentation/widget/category/drinks_category_screen.dart';
 import 'package:meal_generator/presentation/widget/category/meals_category_screen.dart';
+import 'package:meal_generator/core/app_path.dart' as app_path;
 
 class MainCategoryScreen extends StatefulWidget {
   @override
@@ -11,12 +12,12 @@ class MainCategoryScreen extends StatefulWidget {
 }
 
 class _MainCategoryScreenState extends State<MainCategoryScreen> {
-  late MainCategoryBloc mainCategoryBloc;
+  late MainCategoryBloc _mainCategoryBloc;
 
   @override
   void initState() {
     super.initState();
-    mainCategoryBloc = BlocProvider.of<MainCategoryBloc>(context);
+    _mainCategoryBloc = BlocProvider.of<MainCategoryBloc>(context);
   }
 
   @override
@@ -35,11 +36,11 @@ class _MainCategoryScreenState extends State<MainCategoryScreen> {
         ],
       ),
       floatingActionButton: StreamBuilder(
-        stream: mainCategoryBloc.userHasChosenMealsAndDrinks(),
+        stream: _mainCategoryBloc.userHasChosenMealsAndDrinks(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           var isEnabled = snapshot.data ?? false;
           return FloatingActionButton(
-              onPressed: isEnabled ?  _displayLunchScreen : null,
+              onPressed: isEnabled ?  () => _displayLunchScreen(context) : null,
               backgroundColor: isEnabled ? null : Colors.grey, // null means use inherited theme color
               child: Icon(
                 Icons.shopping_cart,
@@ -49,15 +50,12 @@ class _MainCategoryScreenState extends State<MainCategoryScreen> {
     );
   }
 
-  void _displayLunchScreen() {
-
-  }
-
-  Widget _buildHeader() {
-    return Card(
-      color: Colors.black,
-      child: Text('Please select your choice of food and drink',
-          style: TextStyle(color: Colors.white)),
-    );
+  void _displayLunchScreen(BuildContext context) {
+    var mealsCategory = _mainCategoryBloc.getSelectedMealsCategory();
+    var drinksCategory = _mainCategoryBloc.getSelectedDrinksCategory();
+    if (mealsCategory == null || drinksCategory == null) {
+      return;
+    }
+    Navigator.pushNamed(context, app_path.lunch);
   }
 }

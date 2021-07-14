@@ -5,6 +5,8 @@ import 'package:meal_generator/presentation/bloc/category/main_category_event.da
 import 'package:meal_generator/presentation/bloc/category/main_category_state.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_bloc.dart';
 import 'package:meal_generator/presentation/bloc/category/meals_category_state.dart';
+import 'package:meal_generator/presentation/models/drinks_category.dart';
+import 'package:meal_generator/presentation/models/meals_category.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MainCategoryBloc extends Bloc<MainCategoryEvent, MainCategoryState> {
@@ -22,5 +24,21 @@ class MainCategoryBloc extends Bloc<MainCategoryEvent, MainCategoryState> {
   @override
   Stream<MainCategoryState> mapEventToState(MainCategoryEvent event) {
     throw UnimplementedError();
+  }
+
+  MealsCategory? getSelectedMealsCategory() {
+    var state = mealsCategoryBloc.state;
+    if (state is MealsCategorySelected) {
+      return state.getSelectedCategory();
+    }
+    return null;
+  }
+
+  DrinksCategory? getSelectedDrinksCategory() {
+    var state = drinksCategoryBloc.state;
+    if (state is DrinksCategorySelected) {
+      return state.getSelectedCategory();
+    }
+    return null;
   }
 }

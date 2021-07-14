@@ -31,6 +31,14 @@ class DrinksCategorySelected extends DrinksCategoryState {
 
   DrinksCategorySelected(this.items);
 
+  DrinksCategory? getSelectedCategory() {
+    try {
+      return items.firstWhere((it) => it.isSelected);
+    } on StateError {
+      return null;
+    }
+  }
+
   @override
   List<Object?> get props => items;
 }
