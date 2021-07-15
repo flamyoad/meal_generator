@@ -36,22 +36,7 @@ class _LunchScreenState extends State<LunchScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [Flexible(child: _buildMeals()), Flexible(child: _buildDrinks())],
             ),
-            InkWell(
-              child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RichText(
-                    text: TextSpan(style: Theme.of(context).textTheme.bodyText2, children: [
-                      WidgetSpan(
-                          child: Icon(Icons.star, color: Colors.red),
-                          alignment: PlaceholderAlignment.middle),
-                      TextSpan(text: '  Click here to get another meal set!')
-                    ]),
-                  )),
-              onTap: () {
-                mealsCubit.reload();
-                drinksCubit.reload();
-              },
-            )
+            _buildRefreshLabel()
           ],
         ));
   }
@@ -96,6 +81,25 @@ class _LunchScreenState extends State<LunchScreen> {
       child: Center(
         child: CircularProgressIndicator(),
       ),
+    );
+  }
+
+  Widget _buildRefreshLabel() {
+    return InkWell(
+      child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: RichText(
+            text: TextSpan(style: Theme.of(context).textTheme.bodyText2, children: [
+              WidgetSpan(
+                  child: Icon(Icons.star, color: Colors.red),
+                  alignment: PlaceholderAlignment.middle),
+              TextSpan(text: '  Click here to get another meal set!')
+            ]),
+          )),
+      onTap: () {
+        mealsCubit.reload();
+        drinksCubit.reload();
+      },
     );
   }
 }

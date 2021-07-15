@@ -11,21 +11,19 @@ class LunchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0)
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
       child: InkWell(
         onTap: () {},
         child: Column(
           children: [
-            Image.network(imageUrl, fit: BoxFit.contain,
-                width: 500,
-                height: 200,
+            Image.network(imageUrl, fit: BoxFit.cover, width: 200, height: 200,
                 loadingBuilder: (context, child, loadingProgress) {
               if (loadingProgress == null) {
                 return child;
               }
-              return CircularProgressIndicator();
+              return Container(
+                  constraints: BoxConstraints(minWidth: 200, minHeight: 200),
+                  child: Center(child: CircularProgressIndicator()));
             }),
             Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
