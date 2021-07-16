@@ -50,15 +50,18 @@ class _MealsCategoryScreenState extends State<MealsCategoryScreen> {
         delegate: SliverChildBuilderDelegate(
       (context, i) {
         var item = categories[i];
-        return Card(
-          elevation: 2.0,
-          child: ListTile(
-            leading: _buildPhoto(item),
-            title: Text(item.name),
-            subtitle: Text(item.description, maxLines: 3, overflow: TextOverflow.ellipsis),
-            onTap: () {
-              _mealCategoryBloc.add(MealsCategoryClicked(item));
-            },
+        return Container(
+          margin: const EdgeInsets.fromLTRB(4, 4, 4, 0),
+          child: Card(
+            elevation: 2.0,
+            child: ListTile(
+              leading: _buildPhoto(item),
+              title: Text(item.name),
+              subtitle: Text(item.description, maxLines: 3, overflow: TextOverflow.ellipsis),
+              onTap: () {
+                _mealCategoryBloc.add(MealsCategoryClicked(item));
+              },
+            ),
           ),
         );
       },

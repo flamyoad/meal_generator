@@ -53,7 +53,7 @@ class DrinksCategoryScreenState extends State<DrinksCategoryScreen> {
       delegate: SliverChildBuilderDelegate((context, i) {
         var item = categories[i];
         return Container(
-          margin: const EdgeInsets.all(4.0),
+          margin: const EdgeInsets.fromLTRB(4, 4, 4, 0),
           child: Card(
             elevation: 2.0,
             child: ListTile(

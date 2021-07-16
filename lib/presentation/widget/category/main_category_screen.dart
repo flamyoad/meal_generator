@@ -23,32 +23,38 @@ class _MainCategoryScreenState extends State<MainCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Meal Selector'),
-        centerTitle: true,
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
-      ),
-      body: CustomScrollView(
-        shrinkWrap: true, // if set to false, exception will be thrown wh?y?
-        slivers: [
-          MealsCategoryScreen(),
-          DrinksCategoryScreen(),
-        ],
-      ),
-      floatingActionButton: StreamBuilder(
-        stream: _mainCategoryBloc.userHasChosenMealsAndDrinks(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          var isEnabled = snapshot.data ?? false;
-          return FloatingActionButton(
-              onPressed: isEnabled ? () => _displayLunchScreen(context) : null,
-              backgroundColor: isEnabled ? null : Colors.grey,
-              // null means use inherited theme color
-              child: Icon(
-                Icons.shopping_cart,
-              ));
-        },
-      ),
+    return Stack(
+      children: [
+        CustomScrollView(
+          shrinkWrap: true, // if set to false, exception will be thrown wh?y?
+          slivers: [
+            MealsCategoryScreen(),
+            DrinksCategoryScreen(),
+          ],
+        ),
+        Container(
+          margin: EdgeInsets.all(16.00),
+          child: Align(
+            alignment: Alignment.bottomRight,
+            child: _buildFloatingActionButton()
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildFloatingActionButton() {
+    return StreamBuilder(
+      stream: _mainCategoryBloc.userHasChosenMealsAndDrinks(),
+      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+        var isEnabled = snapshot.data ?? false;
+        return FloatingActionButton(
+            onPressed: isEnabled ? () => _displayLunchScreen(context) : null,
+            backgroundColor: isEnabled ? null : Colors.grey, // null means use inherited theme color
+            child: Icon(
+              Icons.shopping_cart,
+            ));
+      },
     );
   }
 
