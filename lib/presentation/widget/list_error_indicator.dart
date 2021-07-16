@@ -12,15 +12,19 @@ class ListErrorIndicator extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(4.0),
         child: Card(
-          child: Column(
-            children: [
-              Text('Error has occured', textAlign: TextAlign.center),
-              ElevatedButton(
-                  onPressed: () {
-                    onReloadCallback.call();
-                  },
-                  child: Text('Retry'))
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text('Error has occured', textAlign: TextAlign.center),
+                ElevatedButton(
+                    onPressed: () {
+                      onReloadCallback.call();
+                    },
+                    child: Text('Retry'))
+              ],
+            ),
           ),
         ),
       ),

@@ -2,7 +2,11 @@ import 'package:dartz/dartz.dart' hide State;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meal_generator/presentation/bloc/category/drinks_category_bloc.dart';
+import 'package:meal_generator/presentation/bloc/category/drinks_category_event.dart';
 import 'package:meal_generator/presentation/bloc/category/main_category_cubit.dart';
+import 'package:meal_generator/presentation/bloc/category/meals_category_bloc.dart';
+import 'package:meal_generator/presentation/bloc/category/meals_category_event.dart';
 import 'package:meal_generator/presentation/widget/category/drinks_category_screen.dart';
 import 'package:meal_generator/presentation/widget/category/meals_category_screen.dart';
 import 'package:meal_generator/core/app_path.dart' as app_path;
@@ -14,24 +18,31 @@ class MainCategoryScreen extends StatefulWidget {
 
 class _MainCategoryScreenState extends State<MainCategoryScreen> {
   late MainCategoryCubit _mainCategoryBloc;
+  late MealsCategoryBloc _mealsCategoryBloc;
+  late DrinksCategoryBloc _drinksCategoryBloc;
 
   @override
   void initState() {
     super.initState();
     _mainCategoryBloc = BlocProvider.of<MainCategoryCubit>(context);
+    _mealsCategoryBloc = BlocProvider.of(context);
+    _drinksCategoryBloc = BlocProvider.of(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CustomScrollView(
-          shrinkWrap: true, // if set to false, exception will be thrown wh?y?
-          slivers: [
-            _buildHeader(),
-            MealsCategoryScreen(),
-            DrinksCategoryScreen(),
-          ],
+        RefreshIndicator(
+          onRefresh: _refreshList,
+          child: CustomScrollView(
+            shrinkWrap: true, // if set to false, exception will be thrown wh?y?
+            slivers: [
+              _buildHeader(),
+              MealsCategoryScreen(),
+              DrinksCategoryScreen(),
+            ],
+          ),
         ),
         Container(
           margin: EdgeInsets.all(16.00),
@@ -81,5 +92,10 @@ class _MainCategoryScreenState extends State<MainCategoryScreen> {
     }
     Navigator.pushNamed(context, app_path.lunch,
         arguments: Tuple2(mealsCategory.name, drinksCategory.name));
+  }
+
+  Future<void> _refreshList() async {
+    _mealsCategoryBloc.add(MealsCategoryInitialLoad());
+    _drinksCategoryBloc.add(DrinksCategoryInitialLoad());
   }
 }
