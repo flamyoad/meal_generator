@@ -18,7 +18,7 @@ class MainCategoryCubit extends Cubit<MainCategoryState> {
       });
 
   MainCategoryCubit({required this.mealsCategoryBloc, required this.drinksCategoryBloc})
-      : super(MainCategoryHasNotChosenMealAndDrinks());
+      : super(MainCategoryState());
 
   UiMealsCategory? getSelectedMealsCategory() {
     var state = mealsCategoryBloc.state;

@@ -12,8 +12,9 @@ class MealsCategoryReload extends MealsCategoryEvent {}
 
 class MealsCategoryClicked extends MealsCategoryEvent {
   final UiMealsCategory category;
+  final List<UiMealsCategory> categoryList;
 
-  MealsCategoryClicked(this.category);
+  MealsCategoryClicked(this.category, this.categoryList);
 
   @override
   List<Object?> get props => [category];

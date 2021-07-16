@@ -7,8 +7,6 @@ import 'package:meal_generator/presentation/models/ui_meals_category.dart';
 class MealsCategoryBloc extends Bloc<MealsCategoryEvent, MealsCategoryState> {
   final IMealsRepository mealsRepo;
 
-  List<UiMealsCategory> mealsCategories = List.empty();
-
   MealsCategoryBloc(this.mealsRepo) : super(MealsCategoryLoading());
 
   @override
@@ -20,37 +18,31 @@ class MealsCategoryBloc extends Bloc<MealsCategoryEvent, MealsCategoryState> {
       yield MealsCategoryLoading();
       yield await _proceedToLoad();
     } else if (event is MealsCategoryClicked) {
-      yield _itemClicked(event.category);
+      yield _itemClicked(event.category, event.categoryList);
     }
-  }
-
-  @override
-  void onTransition(Transition<MealsCategoryEvent, MealsCategoryState> transition) {
-    super.onTransition(transition);
   }
 
   Future<MealsCategoryState> _proceedToLoad() async {
     var result = await mealsRepo.getAllCategories();
 
     return result.fold((exception) => MealsCategoryError(exception), (mealsCategories) {
-      this.mealsCategories = mealsCategories;
       return MealsCategoryLoaded(mealsCategories);
     });
   }
 
-  MealsCategoryState _itemClicked(UiMealsCategory clickedItem) {
-    // Reverses the state of the item clicked.
-    bool newState = !clickedItem.isSelected;
-    var newList = mealsCategories
+  MealsCategoryState _itemClicked(UiMealsCategory clickedItem, List<UiMealsCategory> oldList) {
+    // Toggles the state of the item clicked to Selected/Unselected
+    bool toggledState = !clickedItem.isSelected;
+    var newList = oldList
         .map((it) => UiMealsCategory(
             id: it.id,
             name: it.name,
             thumbnailUrl: it.thumbnailUrl,
             description: it.description,
-            isSelected: (it.id == clickedItem.id) ? newState : it.isSelected))
+            isSelected: (it.id == clickedItem.id) ? toggledState : false))
         .toList();
 
-    if (newState) {
+    if (toggledState) {
       return MealsCategorySelected(newList);
     } else {
       return MealsCategoryUnselected(newList);

@@ -13,8 +13,9 @@ class DrinksCategoryReload extends DrinksCategoryEvent {}
 
 class DrinksCategoryClicked extends DrinksCategoryEvent {
   final UiDrinksCategory category;
+  final List<UiDrinksCategory> categoryList;
 
-  DrinksCategoryClicked(this.category);
+  DrinksCategoryClicked(this.category, this.categoryList);
 
   @override
   List<Object> get props => [category];

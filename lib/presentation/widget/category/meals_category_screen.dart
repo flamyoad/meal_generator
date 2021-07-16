@@ -45,27 +45,27 @@ class _MealsCategoryScreenState extends State<MealsCategoryScreen> {
     _mealCategoryBloc.add(MealsCategoryReload());
   }
 
-  Widget _buildList(List<UiMealsCategory> categories) {
+  Widget _buildList(List<UiMealsCategory> categoryList) {
     return SliverList(
         delegate: SliverChildBuilderDelegate(
       (context, i) {
-        var item = categories[i];
+        var category = categoryList[i];
         return Container(
           margin: const EdgeInsets.fromLTRB(4, 4, 4, 0),
           child: Card(
             elevation: 2.0,
             child: ListTile(
-              leading: _buildPhoto(item),
-              title: Text(item.name),
-              subtitle: Text(item.description, maxLines: 3, overflow: TextOverflow.ellipsis),
+              leading: _buildPhoto(category),
+              title: Text(category.name),
+              subtitle: Text(category.description, maxLines: 3, overflow: TextOverflow.ellipsis),
               onTap: () {
-                _mealCategoryBloc.add(MealsCategoryClicked(item));
+                _mealCategoryBloc.add(MealsCategoryClicked(category, categoryList));
               },
             ),
           ),
         );
       },
-      childCount: categories.length,
+      childCount: categoryList.length,
     ));
   }
 

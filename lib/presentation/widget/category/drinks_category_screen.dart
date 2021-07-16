@@ -48,25 +48,25 @@ class DrinksCategoryScreenState extends State<DrinksCategoryScreen> {
     _drinksBloc.add(DrinksCategoryReload());
   }
 
-  Widget _buildList(List<UiDrinksCategory> categories) {
+  Widget _buildList(List<UiDrinksCategory> categoryList) {
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, i) {
-        var item = categories[i];
+        var category = categoryList[i];
         return Container(
           margin: const EdgeInsets.fromLTRB(4, 4, 4, 0),
           child: Card(
             elevation: 2.0,
             child: ListTile(
               leading: Icon(Icons.local_drink_rounded,
-                  color: item.isSelected ? Colors.blue : Colors.grey),
-              title: Text(item.name),
+                  color: category.isSelected ? Colors.blue : Colors.grey),
+              title: Text(category.name),
               onTap: () {
-                _drinksBloc.add(DrinksCategoryClicked(item));
+                _drinksBloc.add(DrinksCategoryClicked(category, categoryList));
               },
             ),
           ),
         );
-      }, childCount: categories.length),
+      }, childCount: categoryList.length),
     );
   }
 }

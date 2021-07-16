@@ -28,18 +28,32 @@ class _MainCategoryScreenState extends State<MainCategoryScreen> {
         CustomScrollView(
           shrinkWrap: true, // if set to false, exception will be thrown wh?y?
           slivers: [
+            _buildHeader(),
             MealsCategoryScreen(),
             DrinksCategoryScreen(),
           ],
         ),
         Container(
           margin: EdgeInsets.all(16.00),
-          child: Align(
-            alignment: Alignment.bottomRight,
-            child: _buildFloatingActionButton()
-          ),
+          child: Align(alignment: Alignment.bottomRight, child: _buildFloatingActionButton()),
         )
       ],
+    );
+  }
+
+  Widget _buildHeader() {
+    return SliverToBoxAdapter(
+      child: Card(
+        color: Colors.black87,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+            'Please select one meal & one drink',
+            style: TextStyle(color: Colors.white),
+            textAlign: TextAlign.center,
+          ),
+        ),
+      ),
     );
   }
 
@@ -50,7 +64,8 @@ class _MainCategoryScreenState extends State<MainCategoryScreen> {
         var isEnabled = snapshot.data ?? false;
         return FloatingActionButton(
             onPressed: isEnabled ? () => _displayLunchScreen(context) : null,
-            backgroundColor: isEnabled ? null : Colors.grey, // null means use inherited theme color
+            backgroundColor: isEnabled ? null : Colors.grey,
+            // null means use inherited theme color
             child: Icon(
               Icons.shopping_cart,
             ));
