@@ -97,9 +97,7 @@ class _MyAppState extends State<MyApp> {
                 child: MainCategoryScreen(),
               );
             case 1:
-              return Container(
-                child: TextField()
-              );
+              return Container(child: TextField());
             default:
               throw UnimplementedError();
           }
