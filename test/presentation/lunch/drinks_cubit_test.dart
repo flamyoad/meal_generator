@@ -14,7 +14,7 @@ void main() {
   group('Drinks Cubit', () {
     late DrinksCubit _cubit;
     final String _categoryName = 'Cocktail';
-    final Drinks _drinks = Drinks('1', 'Grape Juice', 'http://www');
+    final Drinks _drinks = Drinks('1', 'Grape Juice', 'grapejuice.jpg');
 
     setUp(() {
       _cubit = DrinksCubit(mockDrinksRepository, _categoryName);
