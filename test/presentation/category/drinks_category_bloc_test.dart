@@ -23,15 +23,19 @@ void main() {
       expect(_bloc.state, DrinksCategoryLoading());
     });
 
+    var categoryList = [UiDrinksCategory(name: 'Cocktail', isSelected: true)];
     blocTest<DrinksCategoryBloc, DrinksCategoryState>(
         'When InitialLoad succeed, show Loading followed by Loaded',
         build: () {
-          when(mockDrinksRepository.getAllCategories()).thenAnswer((_) async => Right([]));
+          when(mockDrinksRepository.getAllCategories())
+              .thenAnswer((_) async => Right(categoryList));
           return _bloc;
         },
         act: (bloc) => bloc.add(DrinksCategoryInitialLoad()),
-        expect: () =>
-            <DrinksCategoryState>[DrinksCategoryLoading(), DrinksCategoryLoaded([])]);
+        expect: () => <DrinksCategoryState>[
+              DrinksCategoryLoading(),
+              DrinksCategoryLoaded(categoryList)
+            ]);
 
     var exception = Exception();
     blocTest<DrinksCategoryBloc, DrinksCategoryState>(
