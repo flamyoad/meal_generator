@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:meal_generator/app_settings.dart';
 
 class OptionsScreen extends StatefulWidget {
   @override
@@ -7,8 +8,6 @@ class OptionsScreen extends StatefulWidget {
 }
 
 class _OptionsScreenState extends State<OptionsScreen> {
-  bool useDarkMode = true;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,11 +18,15 @@ class _OptionsScreenState extends State<OptionsScreen> {
           _buildListHeader(title: 'Theme', icon: Icon(Icons.stream)),
           Flexible(
               child: SwitchListTile(
-                  value: useDarkMode,
+                  value: AppSettingsChanger.getTheme(context) == ThemeMode.dark ? true : false,
                   title: Text('Use dark mode'),
                   subtitle: Text('Saves battery on AMOLED screen'),
-                  onChanged: (bool) {
-                    setState(() => useDarkMode = !useDarkMode);
+                  onChanged: (useDarkMode) {
+                    if (useDarkMode) {
+                      AppSettingsChanger.of(context).setTheme(ThemeMode.dark);
+                    } else {
+                      AppSettingsChanger.of(context).setTheme(ThemeMode.light);
+                    }
                   })),
         ],
       ),
