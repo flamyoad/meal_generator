@@ -33,13 +33,14 @@ void main() {
         act: (cubit) => cubit.load(),
         expect: () => <DrinksState>[DrinksLoaded(_drinks)]);
 
+    var exception = Exception();
     blocTest<DrinksCubit, DrinksState>('When network call failed, show Error state',
         build: () {
           when(mockDrinksRepository.getAllDrinksByCategory(_categoryName))
-              .thenAnswer((_) async => Left(Exception()));
+              .thenAnswer((_) async => Left(exception));
           return _cubit;
         },
         act: (cubit) => cubit.load(),
-        expect: () => <DrinksState>[DrinksError(Exception())]);
+        expect: () => <DrinksState>[DrinksError(exception)]);
   });
 }

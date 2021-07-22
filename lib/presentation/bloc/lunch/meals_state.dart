@@ -13,10 +13,16 @@ class MealsLoaded extends MealsState {
   final Meals meals;
 
   MealsLoaded(this.meals);
+
+  @override
+  List<Object?> get props => [meals];
 }
 
 class MealsError extends MealsState {
   final Exception exception;
 
   MealsError(this.exception);
+
+  @override
+  List<Object?> get props => [exception];
 }

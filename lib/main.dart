@@ -11,6 +11,7 @@ import 'package:meal_generator/presentation/bloc/category/meals_category_bloc.da
 import 'package:meal_generator/presentation/bloc/category/meals_category_state.dart';
 import 'package:meal_generator/presentation/widget/category/main_category_screen.dart';
 import 'package:meal_generator/core/app_path.dart' as app_path;
+import 'package:meal_generator/presentation/widget/options/options_screen.dart';
 
 import 'core/repository/drinks/i_drinks_repository.dart';
 
@@ -45,6 +46,7 @@ class _MyAppState extends State<MyApp> {
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.purple,
+          brightness: Brightness.dark
         ),
         onGenerateRoute: (RouteSettings routeSettings) {
           return AppRoutes.generateRoute(routeSettings, context);
@@ -97,7 +99,7 @@ class _MyAppState extends State<MyApp> {
                 child: MainCategoryScreen(),
               );
             case 1:
-              return Container(child: TextField());
+              return OptionsScreen();
             default:
               throw UnimplementedError();
           }

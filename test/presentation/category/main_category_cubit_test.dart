@@ -39,6 +39,12 @@ void main() {
           MainCategoryCubit(mealsCategoryBloc: _mealsBloc, drinksCategoryBloc: _drinksBloc);
     });
 
+    test('When it is loading, disable Floating Action Button', () {
+      whenListen(_mealsBloc, Stream.fromIterable([MealsCategoryLoading()]));
+      whenListen(_drinksBloc, Stream.fromIterable([DrinksCategoryLoading()]));
+      expect(_mainCategoryCubit.userHasChosenMealsAndDrinks(), emits(false));
+    });
+
     var mockedMealCategoryList = [
       UiMealsCategory(
           id: '1',
@@ -50,7 +56,7 @@ void main() {
 
     var mockedDrinkCategoryList = [UiDrinksCategory(name: 'Drink', isSelected: true)];
 
-    test('When meal and drink are selected, enable Floating Action Button', () {
+    test('When both meal and drink are selected, enable Floating Action Button', () {
       whenListen(
           _mealsBloc, Stream.fromIterable([MealsCategorySelected(mockedMealCategoryList)]));
       whenListen(
@@ -59,20 +65,29 @@ void main() {
       expect(_mainCategoryCubit.userHasChosenMealsAndDrinks(), emits(true));
     });
 
-    test('When one of meal and drink is not selected, disable Floating Action Button', () {
-      whenListen(
-          _mealsBloc, Stream.fromIterable([MealsCategoryUnselected(mockedMealCategoryList)]));
-      whenListen(
-          _drinksBloc, Stream.fromIterable([DrinksCategorySelected(mockedDrinkCategoryList)]));
-
-      expect(_mainCategoryCubit.userHasChosenMealsAndDrinks(), emits(false));
-    });
-
     test('When both meal and drink are not selected, disable Floating Action Button', () {
       whenListen(
           _mealsBloc, Stream.fromIterable([MealsCategoryUnselected(mockedMealCategoryList)]));
       whenListen(_drinksBloc,
           Stream.fromIterable([DrinksCategoryUnselected(mockedDrinkCategoryList)]));
+
+      expect(_mainCategoryCubit.userHasChosenMealsAndDrinks(), emits(false));
+    });
+
+    test('When meal is selected but drink is not selected, disable Floating Action Button', () {
+      whenListen(
+          _mealsBloc, Stream.fromIterable([MealsCategorySelected(mockedMealCategoryList)]));
+      whenListen(
+          _drinksBloc, Stream.fromIterable([DrinksCategoryUnselected(mockedDrinkCategoryList)]));
+
+      expect(_mainCategoryCubit.userHasChosenMealsAndDrinks(), emits(false));
+    });
+
+    test('When drink is selected but meal is not selected, disable Floating Action Button', () {
+      whenListen(
+          _mealsBloc, Stream.fromIterable([MealsCategoryUnselected(mockedMealCategoryList)]));
+      whenListen(
+          _drinksBloc, Stream.fromIterable([DrinksCategorySelected(mockedDrinkCategoryList)]));
 
       expect(_mainCategoryCubit.userHasChosenMealsAndDrinks(), emits(false));
     });
