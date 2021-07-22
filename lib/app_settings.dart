@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:meal_generator/core/repository/settings_repository.dart';
+
+import 'core/di/service_locator.dart';
 
 class AppSettings extends StatefulWidget {
   final Widget child;
@@ -11,11 +14,24 @@ class AppSettings extends StatefulWidget {
 }
 
 class AppSettingsState extends State<AppSettings> {
-  ThemeMode theme = ThemeMode.system;
+  late SettingsRepository _settingsRepository;
+  late ThemeMode _theme;
 
-  setTheme(ThemeMode newTheme) {
+  @override
+  void initState() {
+    super.initState();
+    _settingsRepository = sl.get<SettingsRepository>();
+    _theme = _settingsRepository.darkModeEnabled ? ThemeMode.dark : ThemeMode.system;
+  }
+
+  ThemeMode get theme {
+    return _theme;
+  }
+
+  void set theme(ThemeMode newTheme) {
+    _settingsRepository.darkModeEnabled = newTheme == ThemeMode.dark ? true : false;
     setState(() {
-      theme = newTheme;
+      _theme = newTheme;
     });
   }
 
@@ -39,7 +55,7 @@ class AppSettingsChanger extends InheritedWidget {
 
   static ThemeMode getTheme(BuildContext context) {
     var inherited = context.dependOnInheritedWidgetOfExactType<AppSettingsChanger>();
-    return inherited!.settings.theme;
+    return inherited!.settings._theme;
   }
 
   @override

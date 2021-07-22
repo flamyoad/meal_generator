@@ -9,10 +9,13 @@ import 'package:meal_generator/core/mapper/drink_category_mapper.dart';
 import 'package:meal_generator/core/mapper/meal_category_mapper.dart';
 import 'package:meal_generator/core/network/dio_network_client.dart';
 import 'package:meal_generator/core/network/i_network_client.dart';
+import 'package:meal_generator/core/persistence/hive_storage.dart';
+import 'package:meal_generator/core/persistence/i_local_storage.dart';
 import 'package:meal_generator/core/repository/drinks/drinks_repository.dart';
 import 'package:meal_generator/core/repository/drinks/i_drinks_repository.dart';
 import 'package:meal_generator/core/repository/meals/i_meals_repository.dart';
 import 'package:meal_generator/core/repository/meals/meals_repository.dart';
+import 'package:meal_generator/core/repository/settings_repository.dart';
 
 final sl = GetIt.instance;
 
@@ -21,6 +24,7 @@ Future<void> registerServiceLocator(Environment env) async {
   registerApis();
   registerRepositories();
   registerMappers();
+  registerLocalStorages(env);
 }
 
 void registerNetworkClients(Environment env) {
@@ -53,9 +57,21 @@ void registerRepositories() {
   sl.registerLazySingleton<IDrinksRepository>(() {
     return DrinksRepository(sl.get(), sl.get());
   });
+
+  sl.registerLazySingleton<SettingsRepository>(() {
+    return SettingsRepository(sl.get(instanceName: 'HiveStorage'));
+  });
 }
 
 void registerMappers() {
   sl.registerLazySingleton<MealCategoryMapper>(() => MealCategoryMapper());
   sl.registerLazySingleton<DrinksCategoryMapper>(() => DrinksCategoryMapper());
+}
+
+void registerLocalStorages(Environment env) {
+  sl.registerSingletonAsync<ILocalStorage>(() async {
+    final hiveStorage = HiveStorage();
+    await hiveStorage.init(env.dbName);
+    return hiveStorage;
+  }, instanceName: 'HiveStorage', signalsReady: false);
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meal_generator/app_settings.dart';
+import 'package:meal_generator/core/di/service_locator.dart';
+import 'package:meal_generator/core/repository/settings_repository.dart';
 
 class OptionsScreen extends StatefulWidget {
   @override
@@ -8,6 +10,14 @@ class OptionsScreen extends StatefulWidget {
 }
 
 class _OptionsScreenState extends State<OptionsScreen> {
+  late SettingsRepository settingsRepository;
+
+  @override
+  void initState() {
+    super.initState();
+    settingsRepository = sl.get();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,9 +33,9 @@ class _OptionsScreenState extends State<OptionsScreen> {
                   subtitle: Text('Saves battery on AMOLED screen'),
                   onChanged: (useDarkMode) {
                     if (useDarkMode) {
-                      AppSettingsChanger.of(context).setTheme(ThemeMode.dark);
+                      AppSettingsChanger.of(context).theme = ThemeMode.dark;
                     } else {
-                      AppSettingsChanger.of(context).setTheme(ThemeMode.light);
+                      AppSettingsChanger.of(context).theme = ThemeMode.light;
                     }
                   })),
         ],
