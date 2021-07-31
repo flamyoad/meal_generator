@@ -1,3 +1,7 @@
+### Video to refresh your mind before diving in Flutter again
+* [Top 30 Flutter Tips and Tricks](https://www.youtube.com/watch?v=5vDq5DXXxss) - This video features a lot of unusual but useful widgets. Worth watching to refresh your mind.
+
+
 ### Things that I'd love to see in Dart (that still does not exist) !!
 - Copy constructor (Very handy thing in Kotlin)
 ```kt
