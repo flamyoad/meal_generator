@@ -16,10 +16,13 @@ class MainCategoryScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _MainCategoryScreenState();
 }
 
-class _MainCategoryScreenState extends State<MainCategoryScreen> {
+class _MainCategoryScreenState extends State<MainCategoryScreen> with AutomaticKeepAliveClientMixin {
   late MainCategoryCubit _mainCategoryBloc;
   late MealsCategoryBloc _mealsCategoryBloc;
   late DrinksCategoryBloc _drinksCategoryBloc;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
