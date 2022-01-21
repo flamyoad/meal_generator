@@ -1,3 +1,30 @@
+#### Code formatting
+```
+flutter format .
+```
+
+#### Code Analyzer (analysis_options.yaml)
+```
+flutter analyze
+```
+
+#### Run tests with code coverage
+```
+brew install lcov
+```
+```
+flutter test --coverage
+genhtml coverage/lcov.info -o coverage/html
+```
+
+#### Codegen
+```
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+Generally both `flutter format .` should be in pre-commit hook and `flutter analyze` should be in pre-push hook.
+
+
 ### Video to refresh your mind before diving in Flutter again
 * [Top 30 Flutter Tips and Tricks](https://www.youtube.com/watch?v=5vDq5DXXxss) - This video features a lot of unusual but useful widgets. Worth watching to refresh your mind.
 
